@@ -10,6 +10,15 @@
   args:
     executable: /bin/sh
 
+- name: Import InfluxDB GPG signing key
+  apt_key: url=https://repos.influxdata.com/influxdb.key state=present
+
+- name: Add InfluxDB repository
+  apt_repository: repo='deb https://repos.influxdata.com/ubuntu trusty stable' state=present
+
+- name: Install Telegraf
+  apt: name=telegraf state=present
+
 - name: Crear directorios para rpki monitoring
   file:
     path: '{{ item.dst }}'
@@ -30,18 +39,29 @@
   copy:
     src: '{{ item.src }}'
     dest: '{{ item.dst }}'
-    owner: sadmin
-    group: sadmin
+    owner: '{{ item.o }}'
+    group: '{{ item.g }}'
     mode: '{{ item.mode }}'
   loop:
-    - { src: files/lacnic.tal, dst: /opt/rpkimon/tals, mode: '0664' }
-    - { src: files/lacnic.tal, dst: /opt/rpkimon/tals/lacnic, mode: '0664' }
-    - { src: files/fort.launch.sh, dst: /opt/rpkimon/fort, mode: '0755' }
-    - { src: files/fort.collect.sh, dst: /opt/rpkimon/fort, mode: '0755' }
+    - { src: files/telegraf.sudo, dst: /etc/sudoers.d/telegraf, mode: '0660', o: 'root', g: 'root' }
+    - { src: files/telegraf.rpki_stats.conf, dst: /etc/telegraf/telegraf.d/rpki_stats.conf, mode: '0644', o: 'sadmin', g: 'sadmin' }
+    - { src: files/lacnic.tal, dst: /opt/rpkimon/tals, mode: '0664', o: 'sadmin', g: 'sadmin' }
+    - { src: files/lacnic.tal, dst: /opt/rpkimon/tals/lacnic, mode: '0664', o: 'sadmin', g: 'sadmin' }
+    - { src: files/fort.launch.sh, dst: /opt/rpkimon/fort, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/fort.collect.sh, dst: /opt/rpkimon/fort, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/routinator.launch.sh, dst: /opt/rpkimon/routinator, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/routinator.collect.sh, dst: /opt/rpkimon/routinator, mode: '0755', o: 'sadmin', g: 'sadmin' }
     # - { src: files/named.slaves.conf, dst: /home/bind9/etc/ }
     # - { src: files/named.masters.conf, dst: /home/bind9/etc/ }
     # - { src: files/named.logging.conf, dst: /home/bind9/etc/ }
     # - { src: files/db.pande.mia, dst: /home/bind9/var/zones }
+
+- name: Reinicio el telegraf
+  service:
+     name: telegraf
+     state: restarted
+
+
 
 # - name: Instalar dependencias para el server
 #   apt: 
