@@ -1,0 +1,11 @@
+[klmaster]
+kubelab-master.labs.lacnic.net
+
+[klworkers]
+kubelab1.labs.lacnic.net 
+kubelab2.labs.lacnic.net 
+kubelab3.labs.lacnic.net 
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_user=carlos

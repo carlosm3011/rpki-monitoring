@@ -1,0 +1,9 @@
+# evt: 30
+# anio: 2018
+# ciudad: Rosario
+
+# kl_master: kubelab-master.labs.lacnic.net
+kl_master: 'klmaster.in.xt6.us'
+kluster_local_storage: '/opt/kl_storage'
+kluster_reinstall: false
+

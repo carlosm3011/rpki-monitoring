@@ -1,0 +1,59 @@
+---
+# ROLE users_and_packages
+#
+# 
+
+- name: Instalar dependencias para el apt y fixear el update 
+  shell: | 
+     /usr/bin/apt clean && /usr/bin/apt update
+  args:
+    executable: /bin/sh
+
+- name: Instalar dependencias para el server
+  apt: 
+    pkg: 
+      - sudo
+      - vim-tiny
+      - figlet
+      - make
+      - rsync
+      - bind9-utils
+      - net-tools
+      - htop
+      - fail2ban
+    update_cache: yes
+
+# Los usuarios a crear se definen en la variable usuarios
+- name: Crear usuarios (carlos, sadmin, etc.)
+  user: 
+    name: "{{ item }}"
+    state: present
+    shell: /bin/bash
+    home: "/home/{{ item }}"
+    append: yes
+    groups: sudo
+  loop: '{{ usuarios }}'
+
+# Una clave por usuario, hay que llamarlas id.pub.<<usuario>>'
+- name: Copia las claves publicas al servidor remoto
+  copy:
+    src: "id.pub.{{ item }}"
+    dest: /var/run
+  loop: '{{ usuarios }}'
+  
+- name: Configurar las claves publicas de los usuarios
+  authorized_key:
+    user: "{{ item }}"
+    state: present
+    # key: "{{ lookup('file', '/var/run/id.pub.'+item) }}"
+    key: "{{ lookup('file', 'id.pub.'+item) }}"
+  loop: '{{ usuarios }}'
+
+- name: Deshabilito UFW
+  ufw:
+    state: disabled
+
+- name: Levanto el fail2ban corriendo
+  service:
+     name: fail2ban
+     state: started

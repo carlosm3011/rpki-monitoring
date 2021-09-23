@@ -1,0 +1,43 @@
+# Vagrant para el lab de kubernetes
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provider "virtualbox" do |vb|
+    # vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+    config.vm.box = "ubuntu/focal64"
+    vb.memory = 4096
+    vb.cpus = 4
+  end  
+
+  config.vm.provider "parallels" do |vb, override|
+    # vb.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+    override.vm.box = "simplyswimaustralia/parallels_m1_ubuntu20.10"
+  end  
+
+  # Vagrant en x86
+  # config.vm.box = "ubuntu/focal64"
+
+  # Vagrant en M1
+  # config.vm.box = "simplyswimaustralia/parallels_m1_ubuntu20.10"
+
+  config.vm.box_check_update = false
+
+  config.vm.network "forwarded_port", guest: 3000, host: 3000, host_ip: "127.0.0.1"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    echo " "
+    apt-get update 
+    apt-get -y install ansible net-tools figlet
+    cd /vagrant
+    ansible-playbook -i hosts.local.txt site-dev.yml
+    # cd /vagrant
+    # usermod -a -G docker vagrant
+  SHELL
+
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "MAQUINA LISTA!" | figlet -w 120
+    echo " "
+    # docker ps
+  SHELL
+
+end

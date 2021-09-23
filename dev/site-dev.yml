@@ -1,0 +1,20 @@
+---
+# This playbook deploys the tutorial environment
+#
+# (c) CarlosM, based on previous example by juancarlos@lacnic.net
+# v1 20210508
+# v3 20210909
+
+- name: Instala utilidades y diversos roles
+  hosts: all
+  become: true
+
+  roles:
+    - role: users_and_packages
+      tags: users_and_packages
+    #- role: install_k3s
+    #  tags: install_k3s
+    - role: install_docker
+      tags: install_docker
+    - role: rpki-monitoring
+      tags: rpki-monitoring

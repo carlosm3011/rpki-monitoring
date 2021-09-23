@@ -1,0 +1,99 @@
+#
+# Install k3s
+# (c) carlos@xt6.us 20210825
+
+- name: BEGIN Instalar k3s
+  shell: | 
+     echo Instalar k3s | figlet -w 120
+  args:
+    executable: /bin/sh
+
+- name: Reinstalar el Cluster Kubernetes
+  shell: |
+     # CUIDADO, esto puede borrar todo el cluster
+     /usr/local/bin/k3s-uninstall.sh
+     rm /var/local/k3s.installed
+  args:
+    executable: /bin/sh
+    warn: false
+  when: " kluster_reinstall == true "
+
+- name: Bajar archivos instaladores e instalar el master
+  shell: |
+     # export http_proxy="trantor.labs.lacnic.net:8888" 
+     # export https_proxy="trantor.labs.lacnic.net:8888" 
+     curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server —disable traefik" sh 
+     if [ $? -eq 0 ]; then
+         echo OK, k3s instalado
+         date > /var/local/k3s.installed
+     else
+         echo FAIL
+     fi     
+  args:
+    executable: /bin/sh
+    warn: false
+    creates: /var/local/k3s.installed
+  when: "'klmaster' in group_names"
+
+# cat /var/lib/rancher/k3s/server/node-token
+
+- name: Extraigo el token del Master
+  shell: | 
+     cat /var/lib/rancher/k3s/server/node-token
+  register: command_output
+  args:
+    executable: /bin/sh
+    removes: /var/local/k3s.installed
+  when: "'klmaster' in group_names"
+- debug: msg="Master Token {{ command_output.stdout }}"
+  when: "'klmaster' in group_names"
+
+- name: Bajar archivos instaladores e instalar los workers
+  shell: |
+     curl -sfL https://get.k3s.io | K3S_URL="https://{{ kl_master }}:6443" K3S_TOKEN="{{ hostvars[kl_master]['command_output']['stdout'] }}" sh -
+     if [ $? -eq 0 ]; then
+         echo OK, k3s instalado
+         date > /var/local/k3s.installed
+     else
+         echo FAIL, k3s NO INSTALADO
+     fi
+     #
+  args:
+    executable: /bin/sh
+    warn: false
+    creates: /var/local/k3s.installed
+  when: "'klworkers' in group_names"
+
+- name: Etiquetar los nodos workers como workers
+  shell: |
+     # etiqueto los workers
+     kubectl label node --overwrite=true "{{ item.split('.')[0] }}" node-role.kubernetes.io/worker=worker
+  args:
+    executable: /bin/sh
+    warn: false
+  when: "'klmaster' in group_names"
+  with_inventory_hostnames:
+    - klworkers
+
+- name: Instalar y nfs-common
+  apt: 
+    pkg: 
+      - fail2ban
+      - nfs-common
+    update_cache: no
+
+- name: Crear una carpeta para usar como local storage
+  file:
+    path: "{{ kluster_local_storage }}"
+    state: directory
+    owner: root
+    group: sudo
+    mode: 0775
+
+# - name: Correr la instalación en los workers 
+#   shell: | 
+#      echo Instalar k3s en workers
+#   register: command_output
+#   args:
+#     executable: /bin/sh
+# - debug: msg="{{ command_output.stdout }}"

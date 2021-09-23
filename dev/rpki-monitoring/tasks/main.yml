@@ -1,0 +1,93 @@
+---
+# ROLE rpki_monitoring
+#
+# 
+
+- name: Comienzo instalar RPKI Monitoring
+  shell: | 
+     echo INSTALAR RPKI MONITORING
+     logger BEGIN: instalar rpki monitoring
+  args:
+    executable: /bin/sh
+
+- name: Crear directorios para rpki monitoring
+  file:
+    path: '{{ item.dst }}'
+    owner: sadmin
+    group: sadmin
+    state: directory
+    mode: 0755
+  loop:
+    - { dst: /opt/rpkimon }
+    - { dst: /opt/rpkimon/tals }
+    - { dst: /opt/rpkimon/tals/lacnic }
+    - { dst: /opt/rpkimon/fort }
+    - { dst: /opt/rpkimon/octorpki }
+    - { dst: /opt/rpkimon/rpki-client }
+    - { dst: /opt/rpkimon/routinator }
+
+- name: Copia scripts de lanzamiento y de colección de datos de los diferentes validadores
+  copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dst }}'
+    owner: sadmin
+    group: sadmin
+    mode: '{{ item.mode }}'
+  loop:
+    - { src: files/lacnic.tal, dst: /opt/rpkimon/tals, mode: '0664' }
+    - { src: files/lacnic.tal, dst: /opt/rpkimon/tals/lacnic, mode: '0664' }
+    - { src: files/fort.launch.sh, dst: /opt/rpkimon/fort, mode: '0755' }
+    - { src: files/fort.collect.sh, dst: /opt/rpkimon/fort, mode: '0755' }
+    # - { src: files/named.slaves.conf, dst: /home/bind9/etc/ }
+    # - { src: files/named.masters.conf, dst: /home/bind9/etc/ }
+    # - { src: files/named.logging.conf, dst: /home/bind9/etc/ }
+    # - { src: files/db.pande.mia, dst: /home/bind9/var/zones }
+
+# - name: Instalar dependencias para el server
+#   apt: 
+#     pkg: 
+#       - sudo
+#       - vim-tiny
+#       - figlet
+#       - make
+#       - rsync
+#       - bind9-utils
+#       - net-tools
+#       - htop
+#       - fail2ban
+#     update_cache: yes
+
+# # Los usuarios a crear se definen en la variable usuarios
+# - name: Crear usuarios (carlos, sadmin, etc.)
+#   user: 
+#     name: "{{ item }}"
+#     state: present
+#     shell: /bin/bash
+#     home: "/home/{{ item }}"
+#     append: yes
+#     groups: sudo
+#   loop: '{{ usuarios }}'
+
+# # Una clave por usuario, hay que llamarlas id.pub.<<usuario>>'
+# - name: Copia las claves publicas al servidor remoto
+#   copy:
+#     src: "id.pub.{{ item }}"
+#     dest: /var/run
+#   loop: '{{ usuarios }}'
+  
+# - name: Configurar las claves publicas de los usuarios
+#   authorized_key:
+#     user: "{{ item }}"
+#     state: present
+#     # key: "{{ lookup('file', '/var/run/id.pub.'+item) }}"
+#     key: "{{ lookup('file', 'id.pub.'+item) }}"
+#   loop: '{{ usuarios }}'
+
+# - name: Deshabilito UFW
+#   ufw:
+#     state: disabled
+
+# - name: Levanto el fail2ban corriendo
+#   service:
+#      name: fail2ban
+#      state: started

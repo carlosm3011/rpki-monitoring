@@ -1,0 +1,9 @@
+.terraform*
+*.log
+.DS_Store
+*.tfstate*
+.vagrant
+p.pln
+*.plan
+*.tmp
+coco.bin
