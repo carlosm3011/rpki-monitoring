@@ -1,3 +1,4 @@
+#!/bin/bash
 # Launch fort inside a docker container
 #
 ##

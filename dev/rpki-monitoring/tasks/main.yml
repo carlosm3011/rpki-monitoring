@@ -61,7 +61,14 @@
      name: telegraf
      state: restarted
 
-
+- name: Lanzo los containers de los validadores
+  shell: | 
+     cd /opt/rpkimon
+     logger Lanzando los containers
+     ./fort/fort.launch.sh
+     ./routinator/routinator.launch.sh
+  args:
+    executable: /bin/sh
 
 # - name: Instalar dependencias para el server
 #   apt: 
