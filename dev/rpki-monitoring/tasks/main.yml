@@ -18,10 +18,11 @@
 
 - name: Instalar paquetes auxiliares (tree, jq)
   apt: 
-    pkg:
+    pkg: 
       - tree
       - jq
-  update_cache: no
+      - figlet
+    update_cache: no
 
 - name: Install Telegraf
   apt: name=telegraf state=present
@@ -126,12 +127,6 @@
 #       - sudo
 #       - vim-tiny
 #       - figlet
-#       - make
-#       - rsync
-#       - bind9-utils
-#       - net-tools
-#       - htop
-#       - fail2ban
 #     update_cache: yes
 
 # # Los usuarios a crear se definen en la variable usuarios
