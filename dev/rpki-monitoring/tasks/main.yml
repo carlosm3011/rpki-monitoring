@@ -16,6 +16,13 @@
 - name: Add InfluxDB repository
   apt_repository: repo='deb https://repos.influxdata.com/ubuntu trusty stable' state=present
 
+- name: Instalar paquetes auxiliares (tree, jq)
+  apt: 
+    pkg:
+      - tree
+      - jq
+  update_cache: no
+
 - name: Install Telegraf
   apt: name=telegraf state=present
 
@@ -78,6 +85,10 @@
     - { src: files/fort.collect.sh, dst: /opt/rpkimon/fort, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/routinator.launch.sh, dst: /opt/rpkimon/routinator, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/routinator.collect.sh, dst: /opt/rpkimon/routinator, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/rpki-client.launch.sh, dst: /opt/rpkimon/rpki-client, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/rpki-client.collect.sh, dst: /opt/rpkimon/rpki-client, mode: '0755', o: 'sadmin', g: 'sadmin' }
+
+
     # - { src: files/named.slaves.conf, dst: /home/bind9/etc/ }
     # - { src: files/named.masters.conf, dst: /home/bind9/etc/ }
     # - { src: files/named.logging.conf, dst: /home/bind9/etc/ }
@@ -104,6 +115,7 @@
      logger Lanzando los containers
      ./fort/fort.launch.sh
      ./routinator/routinator.launch.sh
+     ./rpki-client/rpki-client.launch.sh
   args:
     executable: /bin/sh
     creates: /var/local/containers_launched
