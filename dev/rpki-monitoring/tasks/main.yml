@@ -88,6 +88,8 @@
     - { src: files/routinator.collect.sh, dst: /opt/rpkimon/routinator, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/rpki-client.launch.sh, dst: /opt/rpkimon/rpki-client, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/rpki-client.collect.sh, dst: /opt/rpkimon/rpki-client, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/octorpki.launch.sh, dst: /opt/rpkimon/octorpki, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/octorpki.collect.sh, dst: /opt/rpkimon/octorpki, mode: '0755', o: 'sadmin', g: 'sadmin' }
 
 
     # - { src: files/named.slaves.conf, dst: /home/bind9/etc/ }

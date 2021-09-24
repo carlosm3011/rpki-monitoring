@@ -611,12 +611,12 @@
               "condition": "AND",
               "key": "validator",
               "operator": "=",
-              "value": "routinator"
+              "value": "octorpki"
             }
           ]
         }
       ],
-      "title": "VRP Count (XXX)",
+      "title": "VRP Count (octorpki)",
       "transformations": [
         {
           "id": "filterByValue",
@@ -653,7 +653,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "RPKI Stats v5.1",
+  "title": "RPKI Stats v6",
   "uid": "q5WdVTHnk",
-  "version": 1
+  "version": 10
 }
