@@ -1,19 +1,4 @@
 {
-  "__inputs": [],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "8.1.5"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -36,18 +21,17 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "panels": [
     {
-      "datasource": null,
+      "datasource": "InfluxDBv1",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "",
+            "axisLabel": "VRPs",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -162,14 +146,14 @@
       "type": "timeseries"
     },
     {
-      "datasource": null,
+      "datasource": "InfluxDBv1",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
-            "axisLabel": "",
+            "axisLabel": "VRPs",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
@@ -313,7 +297,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "RPKI Stats",
+  "title": "RPKI Stats v4",
   "uid": "q5WdVTHnk",
-  "version": 5
+  "version": 8
 }
