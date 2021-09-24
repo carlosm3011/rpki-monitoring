@@ -30,7 +30,7 @@ Asumiendo que se cuenta con una VM con Ubuntu 20.04 instalado, el proceso para i
 ```
 apt install ansible
 git clone https://github.com/carlosm3011/rpki-monitoring.git
-cd rpki-monitoring.git/dev
+cd rpki-monitoring/dev
 sudo ansible-playbook -i hosts.local.txt site-dev.yml
 ```
 

@@ -143,6 +143,26 @@
         }
       ],
       "title": "VRP Count (fort)",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 9000
+                  }
+                },
+                "fieldName": "rpki.mean"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
       "type": "timeseries"
     },
     {
@@ -281,6 +301,26 @@
         }
       ],
       "title": "VRP Count (routinator)",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 9000
+                  }
+                },
+                "fieldName": "rpki.mean"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
       "type": "timeseries"
     },
     {
@@ -577,10 +617,30 @@
         }
       ],
       "title": "VRP Count (XXX)",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 9000
+                  }
+                },
+                "fieldName": "rpki.mean"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
       "type": "timeseries"
     }
   ],
-  "refresh": "1m",
+  "refresh": "5s",
   "schemaVersion": 30,
   "style": "dark",
   "tags": [],
@@ -593,7 +653,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "RPKI Stats v5",
+  "title": "RPKI Stats v5.1",
   "uid": "q5WdVTHnk",
-  "version": 8
+  "version": 1
 }

@@ -117,6 +117,7 @@
      ./fort/fort.launch.sh
      ./routinator/routinator.launch.sh
      ./rpki-client/rpki-client.launch.sh
+     touch /var/local/containers_launched
   args:
     executable: /bin/sh
     creates: /var/local/containers_launched
