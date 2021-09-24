@@ -1,0 +1,10 @@
+apiVersion: 1
+
+datasources:
+   - name: InfluxDBv1
+     type: influxdb
+     access: proxy
+     database: rpki
+     url: http://localhost:8086
+     jsonData:
+        httpMode: GET

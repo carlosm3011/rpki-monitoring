@@ -19,21 +19,41 @@
 - name: Install Telegraf
   apt: name=telegraf state=present
 
+- name: Install InfluxDB packages
+  apt: name=influxdb state=present
+
+- name: Install Grafana
+  shell: |
+    cd /tmp
+     sudo apt-get install -y adduser libfontconfig1
+     wget https://dl.grafana.com/enterprise/release/grafana-enterprise_8.1.5_amd64.deb
+     sudo dpkg -i grafana-enterprise_8.1.5_amd64.deb
+  args:
+    executable: /bin/sh
+
+- name: Modify InfluxDB hostname
+  replace:
+    dest=/etc/influxdb/influxdb.conf
+    regexp='hostname = "localhost"'
+    replace='hostname = "{{ ansible_hostname }}"'
+    backup=yes
+
 - name: Crear directorios para rpki monitoring
   file:
     path: '{{ item.dst }}'
-    owner: sadmin
-    group: sadmin
+    owner: '{{ item.o }}'
+    group: '{{ item.g }}'
     state: directory
-    mode: 0755
+    mode: '{{ item.mode }}'
   loop:
-    - { dst: /opt/rpkimon }
-    - { dst: /opt/rpkimon/tals }
-    - { dst: /opt/rpkimon/tals/lacnic }
-    - { dst: /opt/rpkimon/fort }
-    - { dst: /opt/rpkimon/octorpki }
-    - { dst: /opt/rpkimon/rpki-client }
-    - { dst: /opt/rpkimon/routinator }
+    - { dst: /opt/rpkimon, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { dst: /opt/rpkimon/tals, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { dst: /opt/rpkimon/tals/lacnic, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { dst: /opt/rpkimon/fort, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { dst: /opt/rpkimon/octorpki, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { dst: /opt/rpkimon/rpki-client, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { dst: /opt/rpkimon/routinator, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { dst: /var/lib/grafana/dashboards, mode: '0755', o: 'root', g: 'root' }
 
 - name: Copia scripts de lanzamiento y de colección de datos de los diferentes validadores
   copy:
@@ -44,6 +64,9 @@
     mode: '{{ item.mode }}'
   loop:
     - { src: files/telegraf.sudo, dst: /etc/sudoers.d/telegraf, mode: '0660', o: 'root', g: 'root' }
+    - { src: files/dashboardFileProvisioner.yml, dst: /etc/grafana/provisioning/dashboards, mode: '0644', o: 'root', g: 'root' }
+    - { src: files/influxdbv1Provisioner.yml, dst: /etc/grafana/provisioning/datasources, mode: '0644', o: 'root', g: 'root' }
+    - { src: files/rpki-stats-v1.json, dst: /var/lib/grafana/dashboards, mode: '0644', o: 'root', g: 'root' }
     - { src: files/telegraf.rpki_stats.conf, dst: /etc/telegraf/telegraf.d/rpki_stats.conf, mode: '0644', o: 'sadmin', g: 'sadmin' }
     - { src: files/lacnic.tal, dst: /opt/rpkimon/tals, mode: '0664', o: 'sadmin', g: 'sadmin' }
     - { src: files/lacnic.tal, dst: /opt/rpkimon/tals/lacnic, mode: '0664', o: 'sadmin', g: 'sadmin' }
@@ -61,6 +84,16 @@
      name: telegraf
      state: restarted
 
+- name: Reinicio el InfluxDB
+  service:
+     name: influxdb
+     state: restarted
+
+- name: Reinicio el Grafana
+  service:
+     name: grafana-server
+     state: restarted
+
 - name: Lanzo los containers de los validadores
   shell: | 
      cd /opt/rpkimon
@@ -69,6 +102,7 @@
      ./routinator/routinator.launch.sh
   args:
     executable: /bin/sh
+    creates: /var/local/containers_launched
 
 # - name: Instalar dependencias para el server
 #   apt: 
