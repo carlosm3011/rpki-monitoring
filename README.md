@@ -34,9 +34,21 @@ cd rpki-monitoring/dev
 sudo ansible-playbook -i hosts.local.txt site-dev.yml
 ```
 
+Para actualizar a una nueva versión de la configuración del monitoreo:
+
+```
+cd rpki-monitoring/dev
+git pull
+sudo sudo ansible-playbook -i hosts.local.txt -t rpki-monitoring site-dev.yml
+```
+
+Con el switch "-t rpki-monitoring" solamente se ejecutan las tareas que instalan y actualizan el propio monitoreo.
+
 ## Uso
 
 Al finalizar el proceso de instalación, tenemos un Grafana escuchando en el puerto 3000. Utilizando las credenciales por defecto (admin/admin) podemos ingresar por primera vez.
+
+Para el caso local usando Vagrant nos conectamos a http://localhost:3000, si estamos usando una VM en otra dirección IP usamos http://<<dir ip>>:9000.
 
 
 
