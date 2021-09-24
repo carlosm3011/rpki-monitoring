@@ -2,6 +2,7 @@
 
 cd /opt/rpkimon/octorpki
 mkdir -p cache
+chmod 777 cache
 
 docker run -d \
         --restart unless-stopped \
