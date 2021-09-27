@@ -16,12 +16,15 @@ Este entorno virtualizado permite la ejecución de múltiples validadores en una
 
 Vagrant es una herramienta que permite automatizar máquinas virtuales locales para testing. Es útil para probar el entorno.
 
-Asumiendo que se tiene Vagrant y VirtualBox instalado, la instalación es muy simple:
+Asumiendo que se tiene Vagrant y VirtualBox instalado, en un sistema operativo "unix-like" (Linux, macOS), la instalación es muy simple. :
 
 ```
+git clone https://github.com/carlosm3011/rpki-monitoring.git
 cd dev
 vagrant up
 ```
+
+Vagrant funciona perfectamente en Windows también, y el proceso es similar. Se necesita instalar git o bajar una copia del repositorio en un archivo zip para poder correr estos comandos desde un prompt de PowerShell.
 
 ### VM 
 
