@@ -21,7 +21,6 @@
       - net-tools
       - htop
       - fail2ban
-      - nginx
       - certbot
     update_cache: yes
 
