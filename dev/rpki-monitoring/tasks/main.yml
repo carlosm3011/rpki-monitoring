@@ -30,12 +30,13 @@
 - name: Install InfluxDB packages
   apt: name=influxdb state=present
 
-- name: Install Grafana
+- name: Install Grafana y asegurar que solo escuche en localhost
   shell: |
     cd /tmp
      sudo apt-get install -y adduser libfontconfig1
      wget https://dl.grafana.com/enterprise/release/grafana-enterprise_8.1.5_amd64.deb
      sudo dpkg -i grafana-enterprise_8.1.5_amd64.deb
+     sed -i.bak 's/\;http_addr\ \=/http_addr=127.0.0.1/' /etc/grafana.ini
   args:
     executable: /bin/sh
 
@@ -91,6 +92,7 @@
     - { src: files/octorpki.launch.sh, dst: /opt/rpkimon/octorpki, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/octorpki.collect.sh, dst: /opt/rpkimon/octorpki, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/metrics.in, dst: /tmp/metrics.in, mode: '0666', o: 'sadmin', g: 'sadmin' }
+    - { src: files/nginx.site.default, dst: /etc/nginx/sites-available, mode: '0644', o: 'root', g: 'root' }
 
 
     # - { src: files/named.slaves.conf, dst: /home/bind9/etc/ }
@@ -113,6 +115,11 @@
      name: grafana-server
      state: restarted
 
+- name: Reinicio el NGINX
+  service:
+     name: nginx
+     state: restarted
+
 - name: Lanzo los containers de los validadores
   shell: | 
      cd /opt/rpkimon
@@ -120,6 +127,7 @@
      ./fort/fort.launch.sh
      ./routinator/routinator.launch.sh
      ./rpki-client/rpki-client.launch.sh
+     ./octorpki/octorpki.launch.sh
      touch /var/local/containers_launched
   args:
     executable: /bin/sh

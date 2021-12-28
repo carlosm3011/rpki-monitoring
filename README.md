@@ -54,4 +54,31 @@ Al finalizar el proceso de instalación, tenemos un Grafana escuchando en el pue
 Para el caso local usando Vagrant nos conectamos a [http://localhost:3000]. Si estamos usando una VM en otra dirección IP usamos [http://a.b.c.d:3000].
 
 
+## Importar datos de otra instalación
 
+La configuración de Telegraf incluida buscará un archivo "/tmp/metrics.in" cada 5 minutos y si lo encuentra, lo va a importar dentro del influx. De esta forma podemos migrar los datos de una instalación a otra.
+
+El archivo metrics.in tiene que contener lineas en el formato que Influx conoce como "line protocol", algo como esto:
+
+```
+rpki,host=ubuntu-focal,mode=rrdp,repo=lacnic,validator=routinator vrp_count=16184 1632520324000000000
+rpki,host=ubuntu-focal,mode=rrdp,repo=lacnic,validator=fort vrp_count=16185 1632520380000000000
+rpki,host=ubuntu-focal,mode=rsync,repo=lacnic,validator=rpki-client vrp_count=16195 1632520380000000000
+rpki,host=ubuntu-focal,mode=rrdp,repo=lacnic,validator=routinator vrp_count=16184 1632520384000000000
+rpki,host=ubuntu-focal,mode=rsync,repo=lacnic,validator=rpki-client vrp_count=16195 1632520440000000000
+rpki,host=ubuntu-focal,mode=rrdp,repo=lacnic,validator=fort vrp_count=16185 1632520440000000000
+```
+
+Para generar este archivo tenemos que seguir los siguietnes pasos:
+
+1. Correr el query que nos devuelve la información que queremos mover de instancia:
+
+```
+influx -format column -database lacnic -execute "select repo,mode,validator,vrp_count from rpki" | tee result0.txt
+```
+
+2. filtrar este resultado con un script de awk similar al siguiente:
+
+```
+cat result0.txt | awk '{printf("rpki,host=localhost,mode=rrdp,repo=%s,validator=%s vrp_count=%s %s\n",$2,$3,$4,$1)}' | tee metrics.in
+```

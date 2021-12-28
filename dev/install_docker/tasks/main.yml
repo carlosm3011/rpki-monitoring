@@ -45,16 +45,6 @@
     dest: /usr/local/bin/docker-compose
     mode: '0755'
 
-# - name: Crear el usuario bind9 con home en /home/bind9
-#   user: 
-#     name: "{{ item }}"
-#     state: present
-#     shell: /bin/bash
-#     home: /home/bind9
-#     append: yes
-#   loop:
-#     - bind9
-
 - name: Deshabilito UFW
   ufw:
     state: disabled

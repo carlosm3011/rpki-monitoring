@@ -21,6 +21,8 @@
       - net-tools
       - htop
       - fail2ban
+      - nginx
+      - certbot
     update_cache: yes
 
 # Los usuarios a crear se definen en la variable usuarios
