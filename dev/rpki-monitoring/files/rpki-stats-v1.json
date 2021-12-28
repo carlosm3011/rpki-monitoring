@@ -21,7 +21,6 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
   "links": [],
   "panels": [
     {
@@ -116,7 +115,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "max"
               }
             ]
           ],
@@ -267,7 +266,7 @@
                 "config": {
                   "id": "greater",
                   "options": {
-                    "value": 9000
+                    "value": 12000
                   }
                 },
                 "fieldName": "rpki.mean"
@@ -425,7 +424,7 @@
                 "config": {
                   "id": "greater",
                   "options": {
-                    "value": 9000
+                    "value": 12000
                   }
                 },
                 "fieldName": "rpki.mean"
@@ -583,7 +582,7 @@
                 "config": {
                   "id": "greater",
                   "options": {
-                    "value": 0
+                    "value": 13000
                   }
                 },
                 "fieldName": "rpki.mean"
@@ -741,7 +740,7 @@
                 "config": {
                   "id": "greater",
                   "options": {
-                    "value": 9000
+                    "value": 13000
                   }
                 },
                 "fieldName": "rpki.mean"
@@ -763,12 +762,12 @@
     "list": []
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "LACNIC Multiple Validator RPKI Stats v7",
+  "title": "LACNIC Multiple Validator RPKI Stats v8",
   "uid": "GwsL3W07z",
-  "version": 6
+  "version": 1
 }
