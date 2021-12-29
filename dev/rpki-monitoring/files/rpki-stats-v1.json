@@ -825,7 +825,7 @@
             },
             "reducer": {
               "params": [],
-              "type": "min"
+              "type": "avg"
             },
             "type": "query"
           }
@@ -1527,7 +1527,7 @@
     "list": []
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
