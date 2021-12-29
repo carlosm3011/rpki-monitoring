@@ -88,7 +88,7 @@
                 "value": null
               },
               {
-                "color": "red",
+                "color": "blue",
                 "value": 80
               }
             ]
@@ -284,6 +284,12 @@
               "key": "validator",
               "operator": "=",
               "value": "fort"
+            },
+            {
+              "condition": "AND",
+              "key": "mode",
+              "operator": "=",
+              "value": "rrdp"
             }
           ]
         }
@@ -337,7 +343,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": false,
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -371,7 +377,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "red",
+                  "fixedColor": "yellow",
                   "mode": "fixed"
                 }
               }
@@ -385,7 +391,7 @@
         "x": 12,
         "y": 6
       },
-      "id": 3,
+      "id": 17,
       "options": {
         "legend": {
           "calcs": [],
@@ -441,12 +447,18 @@
               "condition": "AND",
               "key": "validator",
               "operator": "=",
-              "value": "routinator"
+              "value": "fort"
+            },
+            {
+              "condition": "AND",
+              "key": "mode",
+              "operator": "=",
+              "value": "rsync"
             }
           ]
         }
       ],
-      "title": "VRP Count (routinator)",
+      "title": "VRP Count (fort-rsync)",
       "transformations": [
         {
           "id": "filterByValue",
@@ -687,7 +699,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#7c7c7b",
+                  "fixedColor": "red",
                   "mode": "fixed"
                 }
               }
@@ -701,7 +713,7 @@
         "x": 12,
         "y": 15
       },
-      "id": 5,
+      "id": 3,
       "options": {
         "legend": {
           "calcs": [],
@@ -757,12 +769,18 @@
               "condition": "AND",
               "key": "validator",
               "operator": "=",
-              "value": "octorpki"
+              "value": "routinator"
+            },
+            {
+              "condition": "AND",
+              "key": "mode",
+              "operator": "=",
+              "value": "rrdp"
             }
           ]
         }
       ],
-      "title": "VRP Count (octorpki)",
+      "title": "VRP Count (routinator)",
       "transformations": [
         {
           "id": "filterByValue",
@@ -832,7 +850,7 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 12,
         "x": 0,
         "y": 24
@@ -968,6 +986,164 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 11,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 3,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "rpki.mean"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#7c7c7b",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rpki",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "vrp_count"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "repo",
+              "operator": "=",
+              "value": "lacnic"
+            },
+            {
+              "condition": "AND",
+              "key": "validator",
+              "operator": "=",
+              "value": "octorpki"
+            }
+          ]
+        }
+      ],
+      "title": "VRP Count (octorpki)",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 9000
+                  }
+                },
+                "fieldName": "rpki.mean"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": "InfluxDBv1",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
             "drawStyle": "bars",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -1043,7 +1219,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 33
       },
       "id": 14,
       "options": {
@@ -1193,7 +1369,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "LACNIC Multiple Validator RPKI Stats v10",
+  "title": "LACNIC Multiple Validator RPKI Stats v12",
   "uid": "tiBtV4A7z",
-  "version": 3
+  "version": 10
 }

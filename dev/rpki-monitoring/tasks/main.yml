@@ -92,6 +92,8 @@
     - { src: files/afrinic.tal, dst: /opt/rpkimon/tals/afrinic, mode: '0664', o: 'sadmin', g: 'sadmin' }
     - { src: files/fort.launch.sh, dst: /opt/rpkimon/fort, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/fort.collect.sh, dst: /opt/rpkimon/fort, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/fort-rsync.launch.sh, dst: /opt/rpkimon/fort, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/fort-rsync.collect.sh, dst: /opt/rpkimon/fort, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/routinator.launch.sh, dst: /opt/rpkimon/routinator, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/routinator.collect.sh, dst: /opt/rpkimon/routinator, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/rpki-client.launch.sh, dst: /opt/rpkimon/rpki-client, mode: '0755', o: 'sadmin', g: 'sadmin' }
@@ -133,6 +135,7 @@
      cd /opt/rpkimon
      logger Lanzando los containers
      ./fort/fort.launch.sh
+     ./fort/fort-rsync.launch.sh
      ./routinator/routinator.launch.sh
      ./rpki-client/rpki-client.launch.sh
      ./octorpki/octorpki.launch.sh
