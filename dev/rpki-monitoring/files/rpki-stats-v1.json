@@ -21,6 +21,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": 3,
   "links": [],
   "panels": [
     {
@@ -28,7 +29,7 @@
       "description": "",
       "gridPos": {
         "h": 6,
-        "w": 18,
+        "w": 12,
         "x": 0,
         "y": 0
       },
@@ -39,6 +40,37 @@
       },
       "pluginVersion": "8.1.5",
       "type": "text"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 12,
+        "y": 0
+      },
+      "id": 16,
+      "options": {
+        "alertName": "",
+        "dashboardAlerts": false,
+        "dashboardTitle": "",
+        "folderId": null,
+        "maxItems": 10,
+        "showOptions": "current",
+        "sortOrder": 1,
+        "stateFilter": {
+          "alerting": false,
+          "execution_error": false,
+          "no_data": false,
+          "ok": false,
+          "paused": false,
+          "pending": false
+        },
+        "tags": []
+      },
+      "pluginVersion": "8.1.5",
+      "title": "Past Alerts",
+      "type": "alertlist"
     },
     {
       "datasource": "InfluxDBv1",
@@ -66,8 +98,8 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 6,
-        "x": 18,
+        "w": 4,
+        "x": 20,
         "y": 0
       },
       "id": 9,
@@ -754,6 +786,42 @@
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                5000
+              ],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "180m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "min"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "*** ¡ATENCIÓN! *** No estoy viendo que se esté publicando el repo.",
+        "name": "Preval Heartbeat alert",
+        "noDataState": "alerting",
+        "notifications": []
+      },
       "aliasColors": {
         "rpki.last": "dark-purple"
       },
@@ -839,7 +907,16 @@
           ]
         }
       ],
-      "thresholds": [],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "lt",
+          "value": 5000,
+          "visible": true
+        }
+      ],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
@@ -1116,7 +1193,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "LACNIC Multiple Validator RPKI Stats v9",
-  "uid": "GwsL3W07z",
-  "version": 1
+  "title": "LACNIC Multiple Validator RPKI Stats v10",
+  "uid": "tiBtV4A7z",
+  "version": 3
 }
