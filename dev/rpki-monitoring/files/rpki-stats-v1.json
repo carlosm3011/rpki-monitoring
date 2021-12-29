@@ -115,7 +115,7 @@
               },
               {
                 "params": [],
-                "type": "max"
+                "type": "mean"
               }
             ]
           ],
@@ -266,7 +266,7 @@
                 "config": {
                   "id": "greater",
                   "options": {
-                    "value": 12000
+                    "value": 9000
                   }
                 },
                 "fieldName": "rpki.mean"
@@ -424,7 +424,7 @@
                 "config": {
                   "id": "greater",
                   "options": {
-                    "value": 12000
+                    "value": 9000
                   }
                 },
                 "fieldName": "rpki.mean"
@@ -582,7 +582,7 @@
                 "config": {
                   "id": "greater",
                   "options": {
-                    "value": 13000
+                    "value": 0
                   }
                 },
                 "fieldName": "rpki.mean"
@@ -740,7 +740,7 @@
                 "config": {
                   "id": "greater",
                   "options": {
-                    "value": 13000
+                    "value": 9000
                   }
                 },
                 "fieldName": "rpki.mean"
@@ -752,9 +752,358 @@
         }
       ],
       "type": "timeseries"
+    },
+    {
+      "aliasColors": {
+        "rpki.last": "dark-purple"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDBv1",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 11,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.1.5",
+      "pointradius": 5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rpki",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "vrp_count"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "repo",
+              "operator": "=",
+              "value": "lacnic_i"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Preval Heartbeat",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "InfluxDBv1",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 12,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 8
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "custom.drawStyle",
+                "value": "bars"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "rpki",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "vrp_count"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "max"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "elapsed"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "repo",
+              "operator": "=",
+              "value": "lacnic_i"
+            },
+            {
+              "condition": "AND",
+              "key": "vrp_count",
+              "operator": ">",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "rpki",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "vrp_count"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "max"
+              },
+              {
+                "params": [
+                  "1s"
+                ],
+                "type": "elapsed"
+              },
+              {
+                "params": [
+                  "6"
+                ],
+                "type": "moving_average"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "repo",
+              "operator": "=",
+              "value": "lacnic_i"
+            },
+            {
+              "condition": "AND",
+              "key": "vrp_count",
+              "operator": ">",
+              "value": "0"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Repo Generation Trend",
+      "type": "timeseries"
     }
   ],
-  "refresh": "30s",
+  "refresh": "5s",
   "schemaVersion": 30,
   "style": "dark",
   "tags": [],
@@ -762,12 +1111,12 @@
     "list": []
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "LACNIC Multiple Validator RPKI Stats v8",
+  "title": "LACNIC Multiple Validator RPKI Stats v9",
   "uid": "GwsL3W07z",
   "version": 1
 }

@@ -82,3 +82,15 @@ influx -format column -database lacnic -execute "select repo,mode,validator,vrp_
 ```
 cat result0.txt | awk '{printf("rpki,host=localhost,mode=rrdp,repo=%s,validator=%s vrp_count=%s %s\n",$2,$3,$4,$1)}' | tee metrics.in
 ```
+
+3. (Opcional) Si hace falta importar archivos grandes
+
+Para esto se puede usar el API de Influx de la siguiente manera:
+
+```
+curl -i -XPOST 'http://localhost:8086/write?db=rpki' --data-binary @/root/metrics.in
+```
+
+Si el archivo es muy grande se puede usar el comando "split" para partirlo en bloques.
+
+## FIN

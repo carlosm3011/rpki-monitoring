@@ -99,6 +99,7 @@
     - { src: files/octorpki.launch.sh, dst: /opt/rpkimon/octorpki, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/octorpki.collect.sh, dst: /opt/rpkimon/octorpki, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/nginx.site.default, dst: /etc/nginx/sites-available/default, mode: '0644', o: 'root', g: 'root' }
+    - { src: files/preval_stats.collect.sh, dst: /opt/rpkimon/preval_stats.collect.sh, mode: '0755', o: 'sadmin', g: 'sadmin' }
 
 
     # - { src: files/named.slaves.conf, dst: /home/bind9/etc/ }
