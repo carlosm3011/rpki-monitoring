@@ -10,6 +10,13 @@ Además de las diferentes herramientas, cada una de ellas además soporta el acc
 
 Este entorno virtualizado permite la ejecución de múltiples validadores en una misma máquina virtual utilizando Docker. Incluye también una base de datos de series temporales (InfluxDB) y una herramienta de visualización (Grafana)
 
+Incluye los validadores:
+
+- OctoRPKI
+- rpki-client
+- FORT
+- Routinator
+
 ## Instalación
 
 ### Vagrant
