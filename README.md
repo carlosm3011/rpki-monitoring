@@ -49,9 +49,9 @@ Con el switch "-t rpki-monitoring" solamente se ejecutan las tareas que instalan
 
 ## Uso
 
-Al finalizar el proceso de instalación, tenemos un Grafana escuchando en el puerto 3000. Utilizando las credenciales por defecto (admin/admin) podemos ingresar por primera vez.
+Al finalizar el proceso de instalación, tenemos un NGINX escuchando en los puertos 80 y 8080 y haciendo proxy reverso al Grafana que solo escucha en la dirección localhost en el puerto 3000. Utilizando las credenciales por defecto (admin/admin) podemos ingresar por primera vez. En el primer login deberemos cambiar la clave por defecto.
 
-Para el caso local usando Vagrant nos conectamos a [http://localhost:3000]. Si estamos usando una VM en otra dirección IP usamos [http://a.b.c.d:3000].
+Para el caso local usando Vagrant nos conectamos a [http://localhost:80080]. Si estamos usando una VM en otra dirección IP usamos [http://a.b.c.d] o [http://a.b.c.d:8080].
 
 
 ## Importar datos de otra instalación
