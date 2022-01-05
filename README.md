@@ -93,4 +93,28 @@ curl -i -XPOST 'http://localhost:8086/write?db=rpki' --data-binary @/root/metric
 
 Si el archivo es muy grande se puede usar el comando "split" para partirlo en bloques.
 
+## Ajustes finales
+
+### Ajustar el "hostname" en Grafana 
+
+Ajustar esta configuración es útil para poder compartir dashboards con facilidad.
+
+### Cambiar el certificado autofirmado por uno válido de Let's Encrypt
+
+TBW*
+
+## Anexos
+
+Crear un certificado autofirmado:
+
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+```
+
+Crear archivo dhparam para la "perfect forward secrecy":
+
+```
+sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
+```
+
 ## FIN

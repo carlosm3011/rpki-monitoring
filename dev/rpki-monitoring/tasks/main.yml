@@ -105,6 +105,8 @@
     - { src: files/nginx.site.default, dst: /etc/nginx/sites-available/default, mode: '0644', o: 'root', g: 'root' }
     - { src: files/preval_stats.collect.sh, dst: /opt/rpkimon/preval_stats.collect.sh, mode: '0755', o: 'sadmin', g: 'sadmin' }
     - { src: files/influx_cleanup.sh, dst: /opt/rpkimon/influx_cleanup.sh, mode: '0755', o: 'sadmin', g: 'sadmin' }
+    - { src: files/nginx-selfsigned.crt, dst: /etc/ssl/certs/nginx-selfsigned.crt, mode: '0644', o: 'root', g: 'root' }
+    - { src: files/nginx-selfsigned.key, dst: /etc/ssl/private/nginx-selfsigned.key, mode: '0600', o: 'root', g: 'root' }
 
 
     # - { src: files/named.slaves.conf, dst: /home/bind9/etc/ }
@@ -116,21 +118,25 @@
   service:
      name: telegraf
      state: restarted
+     enabled: yes
 
 - name: Reinicio el InfluxDB
   service:
      name: influxdb
      state: restarted
+     enabled: yes
 
 - name: Reinicio el Grafana
   service:
      name: grafana-server
      state: restarted
+     enabled: yes
 
 - name: Reinicio el NGINX
   service:
      name: nginx
      state: restarted
+     enabled: yes
 
 - name: Lanzo los containers de los validadores
   shell: | 

@@ -21,7 +21,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 4,
   "links": [],
   "panels": [
     {
@@ -831,14 +831,18 @@
             "type": "query"
           }
         ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
+        "executionErrorState": "alerting",
+        "for": "60m",
         "frequency": "1m",
         "handler": 1,
-        "message": "** ATENCIÓN ** \nNO veo que se esté publicando el repo",
+        "message": "** ATENCION **\n\nSoy Lisa en Labs. No estoy viendo que se esté publicando el repo.\n\nOJO> esta alerta no esta del todo depurada aun.",
         "name": "Preval Heartbeat alert",
-        "noDataState": "alerting",
-        "notifications": []
+        "noDataState": "no_data",
+        "notifications": [
+          {
+            "uid": "iScoEH07k"
+          }
+        ]
       },
       "aliasColors": {
         "rpki.last": "dark-purple"
@@ -1035,7 +1039,7 @@
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "orange",
+                  "fixedColor": "#7c7c7b",
                   "mode": "fixed"
                 }
               }
@@ -1049,7 +1053,7 @@
         "x": 12,
         "y": 24
       },
-      "id": 18,
+      "id": 5,
       "options": {
         "legend": {
           "calcs": [],
@@ -1105,18 +1109,12 @@
               "condition": "AND",
               "key": "validator",
               "operator": "=",
-              "value": "routinator"
-            },
-            {
-              "condition": "AND",
-              "key": "mode",
-              "operator": "=",
-              "value": "rsync"
+              "value": "octorpki"
             }
           ]
         }
       ],
-      "title": "VRP Count (routinator-rsync)",
+      "title": "VRP Count (octorpki)",
       "transformations": [
         {
           "id": "filterByValue",
@@ -1222,9 +1220,9 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
-        "x": 0,
+        "x": 12,
         "y": 33
       },
       "id": 14,
@@ -1360,167 +1358,9 @@
       "timeShift": null,
       "title": "Repo Generation Trend",
       "type": "timeseries"
-    },
-    {
-      "datasource": "InfluxDBv1",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 11,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "smooth",
-            "lineWidth": 3,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "rpki.mean"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#7c7c7b",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 33
-      },
-      "id": 5,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "rpki",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "vrp_count"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "repo",
-              "operator": "=",
-              "value": "lacnic"
-            },
-            {
-              "condition": "AND",
-              "key": "validator",
-              "operator": "=",
-              "value": "octorpki"
-            }
-          ]
-        }
-      ],
-      "title": "VRP Count (octorpki)",
-      "transformations": [
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "greater",
-                  "options": {
-                    "value": 9000
-                  }
-                },
-                "fieldName": "rpki.mean"
-              }
-            ],
-            "match": "any",
-            "type": "include"
-          }
-        }
-      ],
-      "type": "timeseries"
     }
   ],
-  "refresh": "5s",
+  "refresh": "",
   "schemaVersion": 30,
   "style": "dark",
   "tags": [],
@@ -1533,7 +1373,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "LACNIC Multiple Validator RPKI Stats v13",
-  "uid": "ZVwzEV07k",
-  "version": 3
+  "title": "LACNIC Multiple Validator RPKI Stats v14",
+  "uid": "SyiUpa07k",
+  "version": 2
 }
