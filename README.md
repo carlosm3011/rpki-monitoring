@@ -10,6 +10,13 @@ Además de las diferentes herramientas, cada una de ellas además soporta el acc
 
 Este entorno virtualizado permite la ejecución de múltiples validadores en una misma máquina virtual utilizando Docker. Incluye también una base de datos de series temporales (InfluxDB) y una herramienta de visualización (Grafana)
 
+Incluye los validadores:
+
+- OctoRPKI
+- rpki-client
+- FORT
+- Routinator
+
 ## Instalación
 
 ### Vagrant
@@ -49,9 +56,9 @@ Con el switch "-t rpki-monitoring" solamente se ejecutan las tareas que instalan
 
 ## Uso
 
-Al finalizar el proceso de instalación, tenemos un Grafana escuchando en el puerto 3000. Utilizando las credenciales por defecto (admin/admin) podemos ingresar por primera vez.
+Al finalizar el proceso de instalación, tenemos un NGINX escuchando en los puertos 80 y 8080 y haciendo proxy reverso al Grafana que solo escucha en la dirección localhost en el puerto 3000. Utilizando las credenciales por defecto (admin/admin) podemos ingresar por primera vez. En el primer login deberemos cambiar la clave por defecto.
 
-Para el caso local usando Vagrant nos conectamos a [http://localhost:3000]. Si estamos usando una VM en otra dirección IP usamos [http://a.b.c.d:3000].
+Para el caso local usando Vagrant nos conectamos a [http://localhost:80080]. Si estamos usando una VM en otra dirección IP usamos [http://a.b.c.d] o [http://a.b.c.d:8080].
 
 
 ## Importar datos de otra instalación
@@ -93,6 +100,7 @@ curl -i -XPOST 'http://localhost:8086/write?db=rpki' --data-binary @/root/metric
 
 Si el archivo es muy grande se puede usar el comando "split" para partirlo en bloques.
 
+<<<<<<< HEAD
 ## Ajustes finales
 
 ### Ajustar el "hostname" en Grafana 
@@ -118,3 +126,6 @@ sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
 ```
 
 ## FIN
+=======
+## FIN
+>>>>>>> e8b0cf9fc36e4856628d5338ee86db3e3a714714
