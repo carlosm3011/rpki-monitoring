@@ -56,7 +56,7 @@ server {
     ssl                  on;
     ssl_certificate      /etc/ssl/certs/nginx-selfsigned.crt;
     ssl_certificate_key  /etc/ssl/private/nginx-selfsigned.key;
-    server_name labs.lacnic.net;
+    server_name localhost;
 
     location / {
       proxy_pass http://localhost:3000/;

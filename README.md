@@ -100,7 +100,6 @@ curl -i -XPOST 'http://localhost:8086/write?db=rpki' --data-binary @/root/metric
 
 Si el archivo es muy grande se puede usar el comando "split" para partirlo en bloques.
 
-<<<<<<< HEAD
 ## Ajustes finales
 
 ### Ajustar el "hostname" en Grafana 
@@ -109,7 +108,17 @@ Ajustar esta configuración es útil para poder compartir dashboards con facilid
 
 ### Cambiar el certificado autofirmado por uno válido de Let's Encrypt
 
-TBW*
+Correr los siguientes comandos:
+
+```
+sudo apt install certbot python3-certbot-nginx
+```
+
+Chequear el server_name en nginx.
+
+```
+sudo certbot --nginx  -d lisa.labs.lacnic.net # lisa.labs.lacnic.net es el server_name
+```
 
 ## Anexos
 
@@ -126,6 +135,3 @@ sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
 ```
 
 ## FIN
-=======
-## FIN
->>>>>>> e8b0cf9fc36e4856628d5338ee86db3e3a714714

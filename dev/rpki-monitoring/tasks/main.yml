@@ -109,10 +109,17 @@
     - { src: files/nginx-selfsigned.key, dst: /etc/ssl/private/nginx-selfsigned.key, mode: '0600', o: 'root', g: 'root' }
 
 
-    # - { src: files/named.slaves.conf, dst: /home/bind9/etc/ }
-    # - { src: files/named.masters.conf, dst: /home/bind9/etc/ }
-    # - { src: files/named.logging.conf, dst: /home/bind9/etc/ }
-    # - { src: files/db.pande.mia, dst: /home/bind9/var/zones }
+- name: Self-signed cert generation for NGINX
+  shell: |
+     openssl req -new -newkey rsa:4096 -days 365 -nodes -x509  \
+       -subj "/C=UY/ST=MVD/L=Montevideo/O=Dis/CN=localhost"  \
+       -keyout /etc/ssl/private/nginx-selfsigned.key  \
+       -out /etc/ssl/certs/nginx-selfsigned.crt
+       #
+       touch /var/local/self_signed_cert_created
+  args:
+    executable: /bin/sh
+    creates: /var/local/self_signed_cert_created
 
 - name: Reinicio el telegraf
   service:
@@ -152,45 +159,4 @@
     executable: /bin/sh
     creates: /var/local/containers_launched
 
-# - name: Instalar dependencias para el server
-#   apt: 
-#     pkg: 
-#       - sudo
-#       - vim-tiny
-#       - figlet
-#     update_cache: yes
 
-# # Los usuarios a crear se definen en la variable usuarios
-# - name: Crear usuarios (carlos, sadmin, etc.)
-#   user: 
-#     name: "{{ item }}"
-#     state: present
-#     shell: /bin/bash
-#     home: "/home/{{ item }}"
-#     append: yes
-#     groups: sudo
-#   loop: '{{ usuarios }}'
-
-# # Una clave por usuario, hay que llamarlas id.pub.<<usuario>>'
-# - name: Copia las claves publicas al servidor remoto
-#   copy:
-#     src: "id.pub.{{ item }}"
-#     dest: /var/run
-#   loop: '{{ usuarios }}'
-  
-# - name: Configurar las claves publicas de los usuarios
-#   authorized_key:
-#     user: "{{ item }}"
-#     state: present
-#     # key: "{{ lookup('file', '/var/run/id.pub.'+item) }}"
-#     key: "{{ lookup('file', 'id.pub.'+item) }}"
-#   loop: '{{ usuarios }}'
-
-# - name: Deshabilito UFW
-#   ufw:
-#     state: disabled
-
-# - name: Levanto el fail2ban corriendo
-#   service:
-#      name: fail2ban
-#      state: started
