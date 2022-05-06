@@ -33,7 +33,7 @@ vagrant up
 
 Vagrant funciona perfectamente en Windows también, y el proceso es similar. Se necesita instalar git o bajar una copia del repositorio en un archivo zip para poder correr estos comandos desde un prompt de PowerShell.
 
-### VM 
+### Máquina Virtual
 
 Asumiendo que se cuenta con una VM con Ubuntu 20.04 instalado, el proceso para instalar la plataforma es similar.
 
@@ -100,12 +100,13 @@ curl -i -XPOST 'http://localhost:8086/write?db=rpki' --data-binary @/root/metric
 
 Si el archivo es muy grande se puede usar el comando "split" para partirlo en bloques.
 
-<<<<<<< HEAD
 ## Ajustes finales
 
 ### Ajustar el "hostname" en Grafana 
 
 Ajustar esta configuración es útil para poder compartir dashboards con facilidad.
+
+TBW*
 
 ### Cambiar el certificado autofirmado por uno válido de Let's Encrypt
 
@@ -126,6 +127,3 @@ sudo openssl dhparam -out /etc/nginx/dhparam.pem 4096
 ```
 
 ## FIN
-=======
-## FIN
->>>>>>> e8b0cf9fc36e4856628d5338ee86db3e3a714714
